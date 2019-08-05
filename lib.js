@@ -23,7 +23,10 @@ function randomlySelectWord(words) {
  * @param {number} length length of target word
  * @returns {string[]}
  */
-function createBlankWordArray(length) {
+function createBlankWordArray(length = 0) {
+  if (typeof length !== 'number') {
+    return new Array(0);
+  }
   return new Array(length).fill('_');
 }
 
@@ -59,6 +62,13 @@ function wordIncludesLetter(word, letter) {
   return word.includes(letter);
 }
 
+function validateInput(input) {
+  if (typeof input !== 'string' || input[0].search(/[A-Z]/i) === -1) {
+    throw new TypeError('Invalid input');
+  }
+  return input[0];
+}
+
 /**
  * Uses `readline-sync` library to ask for user input from command line
  * @returns {string} the inputted string
@@ -84,4 +94,5 @@ module.exports = {
   stringify,
   askForALetter,
   wordIncludesLetter,
+  validateInput,
 };
